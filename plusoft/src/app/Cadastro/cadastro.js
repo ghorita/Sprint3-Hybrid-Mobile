@@ -1,10 +1,34 @@
 import { useState } from 'react';
-import { View, Text, TextInput, StyleSheet } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 export default function Cadastro() {
     const[email, setEmail] = useState("");
     const[senha, setSenha] = useState("");
     const[nome, setNome] = useState("");
+
+    const fazerCadastro = async () => {
+      try {
+        const userData = {
+          email, 
+          senha,
+          nome,
+        };
+
+        const userDataJSON = JSON.stringify(userData);
+
+        await AsyncStorage.setItem('UserData', userDataJSON);
+
+        setEmail('');
+        setSenha('');
+        setNome('');
+
+        alert("Cadastro realizado com sucesso!");
+      } catch(error) {
+          alert("Erro ao cadastrar", error);
+      }
+    };
 
     return(
         <View style = {{ flex: 1, backgroundColor: "#42475C"}}>
@@ -17,9 +41,11 @@ export default function Cadastro() {
             <TextInput style= { styles.input } value={ email } onChangeText={ setEmail }/>
 
             <Text style = { styles.dados }>Senha</Text>
-            <TextInput style= { styles.input } value={ senha } onChangeText= { setSenha }/>
+            <TextInput style= { styles.input } value={ senha } onChangeText= { setSenha } secureTextEntry={true}/>
 
-            <Text style = { styles.btn }>Cadastrar</Text>
+            <TouchableOpacity onPress={fazerCadastro}>
+              <Text style = { styles.btn }>Cadastrar</Text>
+            </TouchableOpacity>
         </View>
     );
 }

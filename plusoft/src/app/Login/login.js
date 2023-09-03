@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { View, Text, TextInput, StyleSheet } from 'react-native';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Login() {
 
@@ -15,7 +15,7 @@ export default function Login() {
         <TextInput style= { styles.input } value={ email } onChangeText={ setEmail }/>
 
         <Text style = { styles.dados }>Senha</Text>
-        <TextInput style= { styles.input } value={ senha } onChangeText= { setSenha }/>
+        <TextInput style= { styles.input } value={ senha } onChangeText= { setSenha } secureTextEntry={true}/>
 
         <Text style = { styles.btnLogin }>Login</Text>
         <Text style = {{ color: "white", textAlign: "center", marginTop: 15}}>Esqueceu a senha?</Text>

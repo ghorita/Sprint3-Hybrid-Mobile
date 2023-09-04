@@ -1,14 +1,14 @@
-import {View, Text, TextInput, ImageBackground, StyleSheet} from 'react-native';
-import imgBackground from '../assets/plusoft background.jpeg';
+import { View, Text, TextInput, ImageBackground, StyleSheet, Image } from 'react-native';
+import banner from '../assets/banner.png';
 
 export default function Principal() {
     return(
         <View style={{ flex: 1 }}>
         <View style={{flex: 1}}>
-          <ImageBackground source={ imgBackground} style={{ width: "100%", height: "100%"}}>
+          <ImageBackground source={banner} style={styles.imgBanner}>
             <TextInput style={ styles.inputHome }/>
             <Text style={{ textAlign: "center", color: "white", fontSize: 20, fontWeight: "bold",
-                            padding: 20}}>
+                            padding: 20, color: "white"}}>
               Plusoft Hike
             </Text>
             <View style={{ width: "40%", flex: 1, alignSelf: "center"}}>
@@ -27,14 +27,14 @@ export default function Principal() {
             Temos um time de especialistas que domina o negócio
           </Text>
           <Text style={{textAlign: "center"}}>
-            dasijdadijasdsidjidsiajdisadjiasdijadajidjiadiadjajdaisd
-            dsiadaijdsajdadisajdadjaidaiddjiasdjaidasidiadiadadjadji
-            dasijdadijasdsidjidsiajdisadjiasdijadajidjiadiadjajdaisd
-            dsiadaijdsajdadisajdadjaidaiddjiasdjaidasidiadiadadjadji
-            dasijdadijasdsidjidsiajdisadjiasdijadajidjiadiadjajdaisd
-            dsiadaijdsajdadisajdadjaidaiddjiasdjaidasidiadiadadjadji
-            dasijdadijasdsidjidsiajdisadjiasdijadajidjiadiadjajdaisd
-            dsiadaijdsajdadisajdadjaidaiddjiasdjaidasidiadiadadjadji
+            Pessoas querem ser ouvidas e ter respostas
+            rápidas e assertivas das suas demandas. Para 
+            isso, é preciso investir na experiência das 
+            pessoas, ou Human Experience(HX), a verdadeira
+            fonte de vantagem competitiva da sua empresa.
+            A plusoft oferece portifólio completo de soluções,
+            separadas por verticais, para sua companhia e
+            voces chegarem lá!
           </Text>
         </View>
       </View>
@@ -84,5 +84,10 @@ const styles = StyleSheet.create({
       marginHorizontal: 80,
       borderRadius: 8,
       marginTop: 30
+    },
+
+    imgBanner: {
+      width: "100%",
+      height: 300
     }
   })

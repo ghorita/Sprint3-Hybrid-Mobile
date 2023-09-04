@@ -1,34 +1,14 @@
 import { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, Button } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import  account from 'react-native-vector-icons/MaterialCommunityIcons';
 
 
-export default function Cadastro() {
+export default function Cadastro({ navigation }) {
+
+    const[nome, setNome] = useState("");
     const[email, setEmail] = useState("");
     const[senha, setSenha] = useState("");
-    const[nome, setNome] = useState("");
-
-    const fazerCadastro = async () => {
-      try {
-        const userData = {
-          email, 
-          senha,
-          nome,
-        };
-
-        const userDataJSON = JSON.stringify(userData);
-
-        await AsyncStorage.setItem('UserData', userDataJSON);
-
-        setEmail('');
-        setSenha('');
-        setNome('');
-
-        alert("Cadastro realizado com sucesso!");
-      } catch(error) {
-          alert("Erro ao cadastrar", error);
-      }
-    };
 
     return(
         <View style = {{ flex: 1, backgroundColor: "#42475C"}}>
@@ -43,9 +23,25 @@ export default function Cadastro() {
             <Text style = { styles.dados }>Senha</Text>
             <TextInput style= { styles.input } value={ senha } onChangeText= { setSenha } secureTextEntry={true}/>
 
-            <TouchableOpacity onPress={fazerCadastro}>
-              <Text style = { styles.btn }>Cadastrar</Text>
+            <TouchableOpacity onPress={()=>{
+                const usuarios = [{
+                  nome, 
+                  email,
+                  senha
+                }]
+                AsyncStorage.setItem("USUARIOS", JSON.stringify(usuarios));
+                alert("Usuario cadastrado com sucesso");
+              }}>
+              <Text style = {styles.btn}>
+                Cadastrar
+              </Text>
             </TouchableOpacity>
+
+            <TouchableOpacity onPress={()=> navigation.navigate('Login')}>
+              <Text style = {{ color: "white", textAlign: "center", marginTop: 15}}>Já tenho uma conta</Text>
+            </TouchableOpacity>
+
+            <MaterialComunnityIcons name="account"/>
         </View>
     );
 }
@@ -71,7 +67,8 @@ const styles = StyleSheet.create({
       borderColor: "white",
       marginHorizontal: 30,
       padding: 10,
-      borderRadius: 8
+      borderRadius: 8,
+      color: "white"
     },
   
     btn: {

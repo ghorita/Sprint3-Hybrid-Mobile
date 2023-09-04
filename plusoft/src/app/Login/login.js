@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { View, Text, TextInput, StyleSheet } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Login() {
@@ -17,7 +17,28 @@ export default function Login() {
         <Text style = { styles.dados }>Senha</Text>
         <TextInput style= { styles.input } value={ senha } onChangeText= { setSenha } secureTextEntry={true}/>
 
-        <Text style = { styles.btnLogin }>Login</Text>
+        <TouchableOpacity onPress={()=>{
+              AsyncStorage.getItem("USUARIOS")
+              .then((info)=>{
+                const usuarios = JSON.parse(info);
+                let achado = false
+                for(const user of usuarios) {
+                  if (user.email == email &&
+                    user.senha == senha) {
+                      achado = true;
+                      alert("usuario logado");
+                    }
+                }
+                if (!achado) {
+                  alert("Usuario ou senha incorretos")
+                }
+
+              })
+              .catch((err)=> alert("Erro ao ler a lista e usuarios"))
+            }}> 
+              <Text style = {styles.btnLogin}>Login</Text>
+            </TouchableOpacity>
+
         <Text style = {{ color: "white", textAlign: "center", marginTop: 15}}>Esqueceu a senha?</Text>
       </View>
     );
@@ -44,7 +65,8 @@ const styles = StyleSheet.create({
       borderColor: "white",
       marginHorizontal: 30,
       padding: 10,
-      borderRadius: 8
+      borderRadius: 8,
+      color: "white"
     },
   
     btnLogin: {

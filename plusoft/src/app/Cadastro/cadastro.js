@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, Button } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import  account from 'react-native-vector-icons/MaterialCommunityIcons';
 
 
 export default function Cadastro({ navigation }) {
@@ -15,13 +14,13 @@ export default function Cadastro({ navigation }) {
             <Text style = {styles.title}>Cadastro</Text>
 
             <Text style = { styles.dados }>Nome</Text>
-            <TextInput style= { styles.input } value={ nome } onChangeText={ setNome }/>
+            <TextInput style= {styles.input} value={nome} onChangeText={setNome}/>
 
             <Text style = { styles.dados }>Email</Text>
-            <TextInput style= { styles.input } value={ email } onChangeText={ setEmail }/>
+            <TextInput style= {styles.input} value={email} onChangeText={setEmail}/>
 
             <Text style = { styles.dados }>Senha</Text>
-            <TextInput style= { styles.input } value={ senha } onChangeText= { setSenha } secureTextEntry={true}/>
+            <TextInput style= {styles.input} value={senha} onChangeText= {setSenha} secureTextEntry={true}/>
 
             <TouchableOpacity onPress={()=>{
                 const usuarios = [{
@@ -40,8 +39,6 @@ export default function Cadastro({ navigation }) {
             <TouchableOpacity onPress={()=> navigation.navigate('Login')}>
               <Text style = {{ color: "white", textAlign: "center", marginTop: 15}}>Já tenho uma conta</Text>
             </TouchableOpacity>
-
-            <MaterialComunnityIcons name="account"/>
         </View>
     );
 }

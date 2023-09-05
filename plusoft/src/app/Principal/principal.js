@@ -1,7 +1,11 @@
 import { View, Text, TextInput, ImageBackground, StyleSheet, Image } from 'react-native';
 import banner from '../assets/banner.png';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import bot from '../assets/bot.jpeg';
 
-export default function Principal() {
+
+
+export default function Principal({ navigation }) {
     return(
         <View style={{ flex: 1 }}>
         <View style={{flex: 1}}>
@@ -36,6 +40,13 @@ export default function Principal() {
             separadas por verticais, para sua companhia e
             voces chegarem lá!
           </Text>
+        </View>
+        <View style={{flexDirection: "row", justifyContent: "center"}}>
+        <MaterialCommunityIcons name="whatsapp" color={"green"} size={60}
+            onPress={()=> navigation.navigate('Login')} style={styles.icons}/>
+
+          <MaterialCommunityIcons name="robot" color={"#4BA8C5"} size={60}
+            onPress={()=> navigation.navigate('Gpt')} style={styles.icons}/>
         </View>
       </View>
     );
@@ -89,5 +100,14 @@ const styles = StyleSheet.create({
     imgBanner: {
       width: "100%",
       height: 300
+    },
+
+    botImg: {
+      width: 50,
+      height: 50
+    },
+
+    icons: {
+      paddingHorizontal: 100
     }
   })

@@ -2,10 +2,11 @@ import { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function Login() {
+export default function Login({ navigation }) {
 
     const[email, setEmail] = useState("");
     const[senha, setSenha] = useState("");
+
 
     return(
         <View style = {{ flex: 1, backgroundColor: "#42475C"}}>
@@ -19,27 +20,33 @@ export default function Login() {
 
         <TouchableOpacity onPress={()=>{
               AsyncStorage.getItem("USUARIOS")
-              .then((info)=>{
+              .then((info) => {
                 const usuarios = JSON.parse(info);
-                let achado = false
-                for(const user of usuarios) {
-                  if (user.email == email &&
-                    user.senha == senha) {
-                      achado = true;
-                      alert("usuario logado");
-                    }
+                let achado = false;
+                for (const user of usuarios) {
+                  if (user.email === email && user.senha === senha) {
+                    achado = true;
+                    alert("Usuário logado");
+        
+                    // Defina uma chave no AsyncStorage para indicar que o usuário está logado
+                    AsyncStorage.setItem("isLoggedIn", "true");
+        
+                    // Navegue para a página principal
+                    navigation.navigate("Principal");
+                  }
                 }
                 if (!achado) {
-                  alert("Usuario ou senha incorretos")
+                  alert("Usuário ou senha incorretos");
                 }
-
               })
-              .catch((err)=> alert("Erro ao ler a lista e usuarios"))
+              .catch((err) => alert("Erro ao ler a lista de usuários"));
             }}> 
               <Text style = {styles.btnLogin}>Login</Text>
             </TouchableOpacity>
 
-        <Text style = {{ color: "white", textAlign: "center", marginTop: 15}}>Esqueceu a senha?</Text>
+        <TouchableOpacity onPress={()=> navigation.navigate("Cadastro")}> 
+          <Text style = {{ color: "white", textAlign: "center", marginTop: 15}}>Criar conta</Text>
+          </TouchableOpacity>
       </View>
     );
 }

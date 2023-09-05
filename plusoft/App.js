@@ -12,22 +12,21 @@ const { Screen, Navigator } = createBottomTabNavigator();
 export default function App() {
   return(
     <NavigationContainer>
-      
-      <Navigator barStyle={{backgroundColor: "green"}}>
-        <Screen name="Gpt" component={TelaGpt} options={{headerShown: false, tabBarIcon: ({ color }) => (
+      <Navigator>
+        <Screen name="Cadastro" component={TelaCadastro} options={{headerShown: false, tabBarStyle: {display: "none"},  tabBarIcon: ({ color }) => (
                                                       <MaterialCommunityIcons name="registered-trademark" color={color} size={26}/>
         ),}}
       />
-        <Screen name="Cadastro" component={TelaCadastro} options={{headerShown: false, tabBarIcon: ({ color }) => (
-                                                      <MaterialCommunityIcons name="registered-trademark" color={color} size={26}/>
-        ),}}
-      />
-        <Screen name="Login" component={TelaLogin} options={{headerShown: false, tabBarIcon: ({color}) => (
+        <Screen name="Login" component={TelaLogin} options={{headerShown: false, tabBarStyle: {display: "none"}, tabBarIcon: ({color}) => (
                                                               <MaterialCommunityIcons name="login" color={color} size={26}/>
         )}}/>
-        <Screen name="Principal" component={TelaPrincipal} options={{headerShown: false, tabBarIcon: ({ color }) => (
+        <Screen name="Principal" component={TelaPrincipal} options={{headerShown: false, tabBarStyle: {display: "none"}, tabBarIcon: ({ color }) => (
                                                       <MaterialCommunityIcons name="home" color={color} size={26}/>
         ),}}/>
+        <Screen name="Gpt" component={TelaGpt} options={{headerShown: false, tabBarStyle: {display: "none"}, tabBarIcon: ({ color }) => (
+                                                      <MaterialCommunityIcons name="registered-trademark" color={color} size={26}/>
+        ),}}
+      />
       </Navigator>
     </NavigationContainer>
   )

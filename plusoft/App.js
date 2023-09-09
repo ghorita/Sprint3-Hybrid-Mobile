@@ -2,6 +2,7 @@ import TelaLogin from './src/app/Login/login';
 import TelaCadastro from './src/app/Cadastro/cadastro';
 import TelaPrincipal from './src/app/Principal/principal';
 import TelaGpt from './src/app/Chatgpt/gpt';
+import TelaWhatsapp from './src/app/Whatsapp/whatsapp';
 import { NavigationContainer } from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';

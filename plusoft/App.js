@@ -28,6 +28,10 @@ export default function App() {
                                                       <MaterialCommunityIcons name="registered-trademark" color={color} size={26}/>
         ),}}
       />
+      <Screen name="Whatsapp" component={TelaWhatsapp} options={{headerShown: false, tabBarStyle: {display: "none"},  tabBarIcon: ({ color }) => (
+                                                      <MaterialCommunityIcons name="registered-trademark" color={color} size={26}/>
+        ),}}
+      />
       </Navigator>
     </NavigationContainer>
   )

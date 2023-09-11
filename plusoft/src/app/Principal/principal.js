@@ -43,7 +43,7 @@ export default function Principal({ navigation }) {
         </View>
         <View style={{flexDirection: "row", justifyContent: "center"}}>
         <MaterialCommunityIcons name="whatsapp" color={"green"} size={60}
-            onPress={()=> navigation.navigate('Login')} style={styles.icons}/>
+            onPress={()=> navigation.navigate('Whatsapp')} style={styles.icons}/>
 
           <MaterialCommunityIcons name="robot" color={"#4BA8C5"} size={60}
             onPress={()=> navigation.navigate('Gpt')} style={styles.icons}/>

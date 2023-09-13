@@ -27,11 +27,7 @@ export default function Login({ navigation }) {
                   if (user.email === email && user.senha === senha) {
                     achado = true;
                     alert("Usuário logado");
-        
-                    // Defina uma chave no AsyncStorage para indicar que o usuário está logado
                     AsyncStorage.setItem("isLoggedIn", "true");
-        
-                    // Navegue para a página principal
                     navigation.navigate("Principal");
                   }
                 }

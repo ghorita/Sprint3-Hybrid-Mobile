@@ -12,7 +12,7 @@ export default function WhatsApp({ navigation }) {
             <View style={{flexDirection: "row", justifyContent: "space-between", alignItems: "center", backgroundColor: "#1F1F1F", marginTop: 40, height: "8%"}}>
                 <View style={{flexDirection: "row", gap: 10}}>
                     <MaterialCommunityIcons name="keyboard-backspace" color={"#2B92FE"} size={40}
-                                onPress={()=> navigation.navigate("Login")}/> 
+                                onPress={()=> navigation.navigate("Principal")}/> 
                     <FontAwesome name="user-circle" color={"white"} size={50}/>
                     <View>
                         <Text style={{color: "white", fontSize: 16}}>Lucas</Text>

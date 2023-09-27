@@ -1,11 +1,35 @@
 import { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+
+const API_KEY = 'AIzaSyAj6l1mKbQMX9iIKK51qpVp8DEy7T7UVKQ';
+
+const apiLogin = axios.create({
+  baseURL: 'https://identitytoolkit.googleapis.com/v1'
+})
+
 
 export default function Login({ navigation }) {
 
-    const[email, setEmail] = useState("");
-    const[senha, setSenha] = useState("");
+    const[email, setEmail] = useState("teste@fiap.com");
+    const[password, setPassword] = useState("12345678");
+    const[token, setToken] = useState(null);
+
+    const logar = () =>{
+      apiLogin.post('/accounts:signInWithPassword?key='+ API_KEY, {
+        email, 
+        password,
+        returnSecureToken: true
+      })
+      .then( (response)=>{ 
+        setToken(response.idToken);
+        alert("Usuário logado com sucesso!");
+        navigation.navigate("Principal");
+      })
+      .catch( (err)=>{
+        alert("Erro: " + err);
+      })
+    }
 
 
     return(
@@ -16,31 +40,13 @@ export default function Login({ navigation }) {
         <TextInput style= { styles.input } value={ email } onChangeText={ setEmail }/>
 
         <Text style = { styles.dados }>Senha</Text>
-        <TextInput style= { styles.input } value={ senha } onChangeText= { setSenha } secureTextEntry={true}/>
+        <TextInput style= { styles.input } value={ password } onChangeText= { setPassword } secureTextEntry={true}/>
 
-        <TouchableOpacity onPress={()=>{
-              AsyncStorage.getItem("USUARIOS")
-              .then((info) => {
-                const usuarios = JSON.parse(info);
-                let achado = false;
-                for (const user of usuarios) {
-                  if (user.email === email && user.senha === senha) {
-                    achado = true;
-                    alert("Usuário logado");
-                    AsyncStorage.setItem("isLoggedIn", "true");
-                    navigation.navigate("Principal");
-                  }
-                }
-                if (!achado) {
-                  alert("Usuário ou senha incorretos");
-                }
-              })
-              .catch((err) => alert("Erro ao ler a lista de usuários"));
-            }}> 
+        <TouchableOpacity onPress={logar}> 
               <Text style = {styles.btnLogin}>Login</Text>
             </TouchableOpacity>
 
-        <TouchableOpacity onPress={()=> navigation.navigate("Cadastro")}> 
+        <TouchableOpacity onPress={()=>{ navigation.navigate("Cadastro")}}> 
           <Text style = {{ color: "white", textAlign: "center", marginTop: 15}}>Criar conta</Text>
           </TouchableOpacity>
       </View>

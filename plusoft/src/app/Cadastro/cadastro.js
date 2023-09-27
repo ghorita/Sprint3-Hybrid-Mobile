@@ -1,13 +1,35 @@
 import { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, Button } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+
+API_KEY = 'AIzaSyAj6l1mKbQMX9iIKK51qpVp8DEy7T7UVKQ';
+
+const apiCadastrar = axios.create({
+  baseURL: 'https://identitytoolkit.googleapis.com/v1'
+})
 
 
 export default function Cadastro({ navigation }) {
 
     const[nome, setNome] = useState("");
     const[email, setEmail] = useState("");
-    const[senha, setSenha] = useState("");
+    const[password, setPassword] = useState("");
+    const[token, setToken] = useState(null);
+
+    const cadastrar = ()=>{
+      apiCadastrar.post('/accounts:signUp?key=' + API_KEY, {
+        email, 
+        password,
+        returnSecureToken: true
+      })
+      .then( (response) =>{
+        alert("Usuário cadastrado com sucesso!");
+        navigation.navigate("Login");
+      })
+      .catch( (err)=>{
+        alert("Erro: " + err);
+      })
+    }
 
     return(
         <View style = {{ flex: 1, backgroundColor: "#42475C"}}>
@@ -20,17 +42,9 @@ export default function Cadastro({ navigation }) {
             <TextInput style= {styles.input} value={email} onChangeText={setEmail}/>
 
             <Text style = { styles.dados }>Senha</Text>
-            <TextInput style= {styles.input} value={senha} onChangeText= {setSenha} secureTextEntry={true}/>
+            <TextInput style= {styles.input} value={password} onChangeText= {setPassword} secureTextEntry={true}/>
 
-            <TouchableOpacity onPress={()=>{
-                const usuarios = [{
-                  nome, 
-                  email,
-                  senha
-                }]
-                AsyncStorage.setItem("USUARIOS", JSON.stringify(usuarios));
-                alert("Usuario cadastrado com sucesso");
-              }}>
+            <TouchableOpacity onPress={cadastrar}>
               <Text style = {styles.btn}>
                 Cadastrar
               </Text>

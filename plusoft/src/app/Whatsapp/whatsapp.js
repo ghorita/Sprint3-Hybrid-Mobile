@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, ImageBackground, FlatList } from 'react-native';
+import { View, Text, TextInput, StyleSheet, ImageBackground, FlatList, Modal, TouchableOpacity } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Foundation from 'react-native-vector-icons/Foundation';
@@ -16,17 +16,32 @@ export default function WhatsApp({ navigation }) {
 
     const[mensagem, setMensagem] = useState("");
     const[lista, setLista] = useState([]);
+    const[modalVisivel, setModalVisivel] = useState(false);
 
     const enviarMensagem = ()=>{
 
         const dados = {mensagem};
         setLista([...lista, dados]);
 
-        apiMensagem.post('/mensagem.json', dados)
+        apiMensagem.post('/mensagemWhatsapp.json', dados)
         .then( (response) =>{
         })
         .catch( (err)=>{
             alert("Erro ao enviar a mensagem");
+        })
+    }
+
+    const deletar = () => {
+
+        const dados = {mensagem};
+        setLista([dados]);
+
+        apiMensagem.delete('/mensagemWhatsapp.json', dados)
+        .then( (response) =>{
+            alert("Mensagem deletada com sucesso!")
+        })
+        .catch( (err) => {
+            alert("Erro ao deletar a mensagem");
         })
     }
 
@@ -52,8 +67,31 @@ export default function WhatsApp({ navigation }) {
                     <FlatList
                         data={lista}
                         renderItem={({ item }) => (
-                            <View style={{backgroundColor: "white", marginHorizontal: 40, marginTop: 30, borderRadius: 6, padding: 5}}>
-                                <Text>{item.mensagem}</Text>
+                            <View style={{backgroundColor: "white", marginHorizontal: 40, marginTop: 30, borderRadius: 6, padding: 5, flexDirection: "row"}}>
+                                <Modal
+                                animationType='fade'
+                                transparent={true}
+                                visible={modalVisivel}
+                                onRequestClose={() => {
+                                    setModalVisivel(!modalVisivel);
+                                }}
+                                >
+                                    <View style={{flex: 1, marginTop: 200, backgroundColor: "white", width: 100, maxHeight: 120, alignItems: "center", flexDirection: "column", marginLeft: 120, backgroundColor: "gray"}}>
+                                        <TouchableOpacity onPress={() => setModalVisivel(!modalVisivel)} style={{alignItems: "center"}}>
+                                            <MaterialCommunityIcons name="close" color={"#000"} size={30}/>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity onPress={deletar} style={{marginTop: 20, flexDirection: "row", alignItems: "center"}}>
+                                            <MaterialCommunityIcons name="trash-can-outline" color={"#000"} size={30}/>
+                                            <Text>Delete</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                </Modal>
+                                <View style={{flexDirection: "row"}}>
+                                    <Text style={{width: 270}}>{item.mensagem}</Text>
+                                    <TouchableOpacity onPress={() => setModalVisivel(true)}>
+                                        <MaterialCommunityIcons name="chevron-down" color={"gray"} size={30}/>
+                                    </TouchableOpacity>
+                                </View>
                             </View>
                         )}
                     />
@@ -72,7 +110,7 @@ export default function WhatsApp({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-    input: {
+    input: { 
         backgroundColor: "#333333", 
         paddingHorizontal: 70,
         borderRadius: 20,
